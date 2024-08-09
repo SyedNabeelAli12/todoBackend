@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // const itemRoutes = require('./routes/item');
 const todoItems = require('./routes/todo')
+const user = require('./routes/user')
 const cors = require('cors');
 
 
@@ -24,6 +25,7 @@ mongoose.connect(mongoURI, {
     .catch(err => console.error('MongoDB connection error:', err));
 // Routes
 app.use('/todo', todoItems);
+app.use('/user', user);
 
 // Start Server
 app.listen(port, () => {
