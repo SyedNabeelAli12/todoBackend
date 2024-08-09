@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const TodoItem = new mongoose.Schema({
   id: String,
-  title: { type: String, required: true },
+  title: { type: String },
 
   description: String,
   dueDate: String,
