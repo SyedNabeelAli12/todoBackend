@@ -4,10 +4,11 @@ const Message = require("../models/Message");
 
 router.post("/", async (req, res) => {
   try {
-
-    console.log("User",req.body.username)
-    const items = await Message.find({username:req.body.username});
-    console.log(items)
+    console.log("User", req.body.username);
+    const items = await Message.find({
+      $or: [{ username: req.body.username }, { reciever: req.body.username }],
+    });
+    console.log(items);
     res.json(items);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -15,22 +16,25 @@ router.post("/", async (req, res) => {
 });
 
 function generateRandomAlphanumeric(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
+  return result;
+}
 
 router.post("/message", async (req, res) => {
   try {
-
-    const json = {id: generateRandomAlphanumeric(10),
-    username: req.body.username,
-    message: req.body.message,
-    Date: new Date().toISOString()}
+    const json = {
+      id: generateRandomAlphanumeric(10),
+      username: req.body.username,
+      message: req.body.message,
+      Date: new Date().toISOString(),
+      reciever: req.body.reciever,
+    };
     const newItem = new Message(json);
     const savedItem = await newItem.save();
     res.status(201).json(savedItem);
@@ -68,7 +72,5 @@ router.post("/message", async (req, res) => {
 //     res.status(400).json({ error: err.message });
 //   }
 // });
-
-
 
 module.exports = router;
