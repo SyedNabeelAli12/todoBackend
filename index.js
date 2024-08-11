@@ -4,13 +4,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // const itemRoutes = require('./routes/item');
 const todoItems = require('./routes/todo')
+const msg = require('./routes/message')
 const user = require('./routes/user')
-const cors = require('cors');
-
-
 const app = express();
 const port = process.env.PORT || 3001;
+const cors = require('cors');
 app.use(cors());
+
+
 // Middleware
 app.use(bodyParser.json());
 
@@ -26,6 +27,7 @@ mongoose.connect(mongoURI, {
 // Routes
 app.use('/todo', todoItems);
 app.use('/user', user);
+app.use('/msg',msg)
 
 // Start Server
 app.listen(port, () => {

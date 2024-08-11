@@ -6,7 +6,9 @@ router.use(express.json());
 const SECRET_KEY = 'SALTINBOUND';
 
 const users = [
-  { username: 'user1', password: 'password1', name: 'User One' }
+  { username: 'admin', password: 'admin', name: 'Admin' },
+  { username: 'user1', password: 'user1', name: 'User One' },
+  { username: 'user2', password: 'user2', name: 'User two' }
 ];
 
 router.post('/api/login', (req, res) => {
